@@ -9,7 +9,6 @@ def signup_request(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            print(form)
             user = form.save()
             # login(request, user)
             messages.success(request, "Signup successful." )
