@@ -13,7 +13,7 @@ def check_valid(request, dic):
     dic['email'] = str(dic['email']).lower()
     if re.fullmatch("[0-9]{8}@uap-bd.edu", dic["email"]):
         return True
-    messages.error(request, mark_safe("Check if the e-mail is valid or not.<br/>(Note: Only the users from UAP are allowed.)"))
+    messages.error(request, mark_safe("Only the users from UAP are allowed. Use your UAP provided e-mail."))
     return False
 
 def confirm_email(email, password):
@@ -40,7 +40,7 @@ def signup_request(request):
                 form.save()
                 messages.success(request, "An e-mail was sent to you with the credentials!" )
             else:   
-                messages.error(request, mark_safe("Check if the e-mail is valid or not.<br/>(Note: Only the users from UAP are allowed.)"))
+                messages.error(request, mark_safe("An account already exist with this e-mail."))
         return redirect("main:signup")
     form = NewUserForm()
     return render (request=request, template_name="main/signup.html", context={"register_form":form})
