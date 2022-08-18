@@ -8,11 +8,12 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
 
-def check_valid(dic):
+def check_valid(request, dic):
     dic = dic.copy()
     dic['email'] = str(dic['email']).lower()
     if re.fullmatch("[0-9]{8}@uap-bd.edu", dic["email"]):
         return True
+    messages.error(request, mark_safe("Check if the e-mail is valid or not.<br/>(Note: Only the users from UAP are allowed.)"))
     return False
 
 def confirm_email(email, password):
@@ -25,7 +26,7 @@ def confirm_email(email, password):
 
 def signup_request(request):
     if request.method == "POST":
-        if check_valid(request.POST):
+        if check_valid(request, request.POST):
             password = get_random_string(8)
             d = request.POST.copy()
             d['password1'] = password
