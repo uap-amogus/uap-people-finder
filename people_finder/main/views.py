@@ -6,6 +6,7 @@ from django.utils.crypto import get_random_string
 import re
 from django.conf import settings
 from django.core.mail import send_mail
+from django.utils.safestring import mark_safe
 
 def check_valid(dic):
     dic = dic.copy()
@@ -38,7 +39,7 @@ def signup_request(request):
                 form.save()
                 messages.success(request, "An e-mail was sent to you with the credentials!" )
             else:   
-                messages.error(request, "Check if the e-mail is valid or not.\n(Note: Only the users from UAP are allowed.")
+                messages.error(request, mark_safe("Check if the e-mail is valid or not.<br/>(Note: Only the users from UAP are allowed.)"))
         return redirect("main:signup")
     form = NewUserForm()
     return render (request=request, template_name="main/signup.html", context={"register_form":form})
