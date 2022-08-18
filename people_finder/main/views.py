@@ -29,14 +29,16 @@ def signup_request(request):
             d = request.POST.copy()
             d['password1'] = password
             d['password2'] = password
-            d['username'] = d['email']
-            confirm_email(d['email'], password)
+            d['username'] = str(d['email']).lower()
+            d['email'] = str(d['email']).lower()
             request.POST = d
             form = NewUserForm(request.POST)
-            user = form.save()
-            messages.success(request, "An E-Mail was sent to you with the credentials!" )
-        else:   
-            messages.error(request, "UAP MAILS ONLY!")
+            if form.is_valid():
+                confirm_email(d['email'], password)
+                form.save()
+                messages.success(request, "An e-mail was sent to you with the credentials!" )
+            else:   
+                messages.error(request, "Check if the e-mail is valid or not.\n(Note: Only the users from UAP are allowed.")
         return redirect("main:signup")
     form = NewUserForm()
     return render (request=request, template_name="main/signup.html", context={"register_form":form})
