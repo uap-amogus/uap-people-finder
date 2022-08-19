@@ -1,4 +1,3 @@
-from urllib import request
 from django.shortcuts import render, redirect
 from .form import NewUserForm, ProfileForm
 from django.contrib.auth import login, logout
@@ -104,8 +103,15 @@ def profile_request(request):
         messages.success(request, "Successfully updated profile info!" )
         return redirect("main:profile")
         
-
     prefill_dict = model_to_dict(Profile.objects.get(username=User.objects.get(username=str(request.user))))
-    print(prefill_dict)
+    inter = Interest.objects.filter(username=User.objects.get(username=str(request.user)))
+    for i, obj in zip(range(1, 4), inter):
+        k = 'interest_'+str(i)
+        j = 'interest_'+str(i)+'_bio'
+        l = 'interest_'+str(i)+'_link'
+        prefill_dict[k] = obj.interest1
+        prefill_dict[j] = obj.bio
+        prefill_dict[l] = obj.link
+        
     profile_form = ProfileForm(initial=prefill_dict)
     return render(request=request, template_name="main/profile.html", context={"profile_form":profile_form})
