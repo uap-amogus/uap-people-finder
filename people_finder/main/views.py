@@ -67,7 +67,7 @@ def login_request(request):
             if user:
                 login(request, user)
                 messages.info(request, "You are now logged in.")
-                return redirect("main:login") #needs to be changed to profile page.
+                return redirect("main:profile") #needs to be changed to profile page.
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -83,9 +83,29 @@ def logout_request(request):
 @login_required(login_url='main:login')
 def profile_request(request):
     if request.method == "POST":
-        pass
+        d = request.POST
+        profile_obj = Profile.objects.get(username=User.objects.get(username=str(request.user)))
+        profile_obj.first_name = d['first_name']
+        profile_obj.last_name = d['last_name']
+        profile_obj.save()
+        Interest.objects.filter(username=User.objects.get(username=str(request.user))).delete()
+        d = d.copy()
+        for i in range(1, 4):
+            k = 'interest_'+str(i)
+            if d[k] == "":
+                d[k] = None
+        try:
+            Interest.objects.create(username=User.objects.get(username=str(request.user)), interest1=d['interest_1'], bio=d['interest_1_bio'], link=d['interest_1_link'])
+            Interest.objects.create(username=User.objects.get(username=str(request.user)), interest1=d['interest_2'], bio=d['interest_2_bio'], link=d['interest_2_link'])
+            Interest.objects.create(username=User.objects.get(username=str(request.user)), interest1=d['interest_3'], bio=d['interest_3_bio'], link=d['interest_3_link'])
+        except:
+            messages.error(request, "Invalid Interest Selection. (Must be unique.)")
+            return redirect("main:profile")
+        messages.success(request, "Successfully updated profile info!" )
+        return redirect("main:profile")
+        
 
-    print(request.user)
     prefill_dict = model_to_dict(Profile.objects.get(username=User.objects.get(username=str(request.user))))
+    print(prefill_dict)
     profile_form = ProfileForm(initial=prefill_dict)
     return render(request=request, template_name="main/profile.html", context={"profile_form":profile_form})

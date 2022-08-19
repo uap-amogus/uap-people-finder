@@ -1,9 +1,10 @@
+from dataclasses import fields
+from pyexpat import model
 from socket import fromshare
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, ListofInterests, Interest
-from django.forms import TextInput
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -21,16 +22,22 @@ class NewUserForm(UserCreationForm):
         return user
 
 class ProfileForm(forms.Form):
-           
-    # class Meta:
-    #     fields = ['first_name', 'last_name', 'display_picture',]
-    #     widgets = {
-    #         'first_name': TextInput(attrs={
-    #             'class': 'form_input'}),
-    #         'last_name': TextInput(attrs={
-    #             'class': 'form_input'}),
-    #         'display_picture': TextInput(attrs={
-    #             'class': 'form_input'}),
-    #         }
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
+    first_name = forms.CharField(max_length=30, required=False)
+    last_name = forms.CharField(max_length=30, required=False)
+    interest_1 = forms.ModelChoiceField(queryset=ListofInterests.objects.all(), required=False)
+    interest_1_bio = forms.CharField(max_length=140,required=False)
+    interest_1_link = forms.CharField(max_length=100,required=False)
+
+
+    interest_2 = forms.ModelChoiceField(queryset=ListofInterests.objects.all(), required=False)
+    interest_2_bio = forms.CharField(max_length=140,required=False)
+    interest_2_link = forms.CharField(max_length=100,required=False)
+
+    interest_3 = forms.ModelChoiceField(queryset=ListofInterests.objects.all(), required=False)
+    interest_3_bio = forms.CharField(max_length=140,required=False)
+    interest_3_link = forms.CharField(max_length=100,required=False)
+
+    # interest1 = forms.
+
+
+    

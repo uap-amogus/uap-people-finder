@@ -18,6 +18,8 @@ class Profile(models.Model):
 
 class Interest(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    interest1 = models.ForeignKey(ListofInterests, on_delete=models.CASCADE, related_name='user_interest')
-    link = models.CharField(max_length=100)
-    bio = models.CharField(max_length=140)
+    interests = [(str(i), str(i)) for i in ListofInterests.objects.all()]
+    # interest1 = models.ForeignKey(ListofInterests, on_delete=models.CASCADE, related_name='user_interest')
+    interest1 = models.CharField(max_length=20, blank=True, choices = interests, unique=True, null=True)
+    link = models.CharField(max_length=100, blank=True)
+    bio = models.CharField(max_length=140, blank=True)

@@ -25,6 +25,7 @@
         <form method="POST">
             {% csrf_token %}
             {{ profile_form|crispy }}
+
             {% comment %} <button class="btn btn-primary" type="submit">Register</button> {% endcomment %}
             <button type="Submit" class="btn btn-outline-primary">Save</button>
         </form>
