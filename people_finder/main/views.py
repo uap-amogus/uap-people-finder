@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -71,3 +72,7 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.") 
     return redirect("main:login")
+
+@login_required(login_url='main:login')
+def profile_request(request):
+    
