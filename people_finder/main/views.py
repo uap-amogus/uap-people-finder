@@ -1,6 +1,6 @@
 from urllib import request
 from django.shortcuts import render, redirect
-from .form import NewUserForm
+from .form import NewUserForm, ProfileForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.utils.crypto import get_random_string
@@ -11,6 +11,12 @@ from django.utils.safestring import mark_safe
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
+from main.models import Profile, ListofInterests, Interest
+from django.contrib.auth.models import User
+
+
+
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -41,7 +47,8 @@ def signup_request(request):
             form = NewUserForm(request.POST)
             if form.is_valid():
                 confirm_email(d['email'], password)
-                form.save()
+                user = form.save()
+                Profile.objects.create(username=user, first_name='', last_name='')
                 messages.success(request, "An e-mail was sent to you with the credentials!" )
             else:   
                 messages.error(request, mark_safe("An account already exist with this e-mail."))
@@ -75,4 +82,10 @@ def logout_request(request):
 
 @login_required(login_url='main:login')
 def profile_request(request):
-    
+    if request.method == "POST":
+        pass
+
+    print(request.user)
+    prefill_dict = model_to_dict(Profile.objects.get(username=User.objects.get(username=str(request.user))))
+    profile_form = ProfileForm(initial=prefill_dict)
+    return render(request=request, template_name="main/profile.html", context={"profile_form":profile_form})

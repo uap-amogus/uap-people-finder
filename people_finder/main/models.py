@@ -12,8 +12,8 @@ class ListofInterests(models.Model):
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, primary_key=True)
     display_picture = models.ImageField()
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     
 
 class Interest(models.Model):
