@@ -1,12 +1,15 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from .form import NewUserForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 import re
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.safestring import mark_safe
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -44,3 +47,27 @@ def signup_request(request):
         return redirect("main:signup")
     form = NewUserForm()
     return render (request=request, template_name="main/signup.html", context={"register_form":form})
+
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                messages.info(request, "You are now logged in.")
+                return redirect("main:login") #needs to be changed to profile page.
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request=request, template_name="main/login.html", context={"login_form":form})
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.") 
+    return redirect("main:login")
