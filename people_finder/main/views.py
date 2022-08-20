@@ -162,7 +162,7 @@ def password_reset_request(request):
                     }
                     email = render_to_string(email_template_name, c)
                     email_from = settings.EMAIL_HOST_USER
-                    recipient_list = [user.email, ]
+                    recipient_list = [str(user.email).lower(), ]
                     try:
                         send_mail(subject, email, email_from, recipient_list)
                     except BadHeaderError:
