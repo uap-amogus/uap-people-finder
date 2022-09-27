@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-
+from django.conf import settings 
+from django.conf.urls.static import static
 app_name = "main"
 
 urlpatterns = [
@@ -12,3 +13,5 @@ urlpatterns = [
     path("password_reset", views.password_reset_request, name="password_reset"),
     path("password_reset_profile", views.password_reset_profile_request, name="password_reset_profile"),
 ]
+if settings.DEBUG:  # new
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

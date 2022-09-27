@@ -23,7 +23,8 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-
+import os
+from pathlib import Path
 
 def check_valid(request, dic):
     dic = dic.copy()
@@ -104,24 +105,20 @@ def profile_request(request):
             username=User.objects.get(username=str(request.user)))
         profile_obj.first_name = d['first_name']
         profile_obj.last_name = d['last_name']
+        if request.FILES.get('display_picture', None) != None:
+                try:
+                    os.remove(str(os.path.join(Path(__file__).resolve().parent.parent)+profile_obj.display_picture.url))
+                except Exception as e:
+                    print('Exception in removing old profile image: ', e)
+                profile_obj.display_picture = request.FILES['display_picture']
         profile_obj.save()
         Interest.objects.filter(username=User.objects.get(
             username=str(request.user))).delete()
         d = d.copy()
         for i in range(1, 4):
-            k = 'interest_'+str(i)
-            if d[k] == "":
-                d[k] = None
-        try:
             Interest.objects.create(username=User.objects.get(username=str(
-                request.user)), interest1=d['interest_1'], bio=d['interest_1_bio'], link=d['interest_1_link'])
-            Interest.objects.create(username=User.objects.get(username=str(
-                request.user)), interest1=d['interest_2'], bio=d['interest_2_bio'], link=d['interest_2_link'])
-            Interest.objects.create(username=User.objects.get(username=str(
-                request.user)), interest1=d['interest_3'], bio=d['interest_3_bio'], link=d['interest_3_link'])
-        except:
-            messages.error(request, "Invalid Interest Selection. (Must be unique.)")
-            return redirect("main:profile")
+                request.user)), interest1=d[f'interest_{i}'], bio=d[f'interest_{i}_bio'], link=d[f'interest_{i}_link'])
+
         messages.success(request, "Successfully updated profile info!")
         return redirect("main:profile")
 
@@ -129,6 +126,7 @@ def profile_request(request):
         username=User.objects.get(username=str(request.user))))
     inter = Interest.objects.filter(
         username=User.objects.get(username=str(request.user)))
+    
     for i, obj in zip(range(1, 4), inter):
         k = 'interest_'+str(i)
         j = 'interest_'+str(i)+'_bio'
@@ -138,7 +136,8 @@ def profile_request(request):
         prefill_dict[l] = obj.link
 
     profile_form = ProfileForm(initial=prefill_dict)
-    return render(request=request, template_name="main/profile.html", context={"profile_form": profile_form})
+    dp_url = prefill_dict['display_picture'].url
+    return render(request=request, template_name="main/profile.html", context={"profile_form": profile_form, 'dp': dp_url})
 
 
 def password_reset_request(request):
@@ -166,13 +165,15 @@ def password_reset_request(request):
                     try:
                         send_mail(subject, email, email_from, recipient_list)
                     except BadHeaderError:
-                        messages.error(request, "There was an issue sending the mail.")
+                        messages.error(
+                            request, "There was an issue sending the mail.")
                         return redirect("password_reset")
                     messages.success(request, "Success!")
                     return redirect("password_reset_done")
 
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form": password_reset_form})
+
 
 @login_required(login_url='main:login')
 def password_reset_profile_request(request):
@@ -200,10 +201,12 @@ def password_reset_profile_request(request):
                     try:
                         send_mail(subject, email, email_from, recipient_list)
                     except BadHeaderError:
-                        messages.error(request, "There was an issue sending the mail.")
+                        messages.error(
+                            request, "There was an issue sending the mail.")
                         return redirect("password_reset")
                     messages.success(request, "Success!")
                     return redirect("password_reset_done")
-    password_reset_form = PasswordResetForm(initial={'email':str(request.user).lower()})
+    password_reset_form = PasswordResetForm(
+        initial={'email': str(request.user).lower()})
     password_reset_form.fields['email'].widget.attrs['readonly'] = True
     return render(request=request, template_name="main/password/password_reset_profile.html", context={"password_reset_form": password_reset_form})

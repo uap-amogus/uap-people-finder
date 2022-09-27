@@ -8,6 +8,7 @@ from .models import Profile, ListofInterests, Interest
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    accept_terms = forms.BooleanField(required=True)
     
     class Meta:
         model = User
@@ -21,9 +22,11 @@ class NewUserForm(UserCreationForm):
             user.save()
         return user
 
+
 class ProfileForm(forms.Form):
     first_name = forms.CharField(max_length=30, required=False)
     last_name = forms.CharField(max_length=30, required=False)
+    display_picture = forms.ImageField()
     interest_1 = forms.ModelChoiceField(queryset=ListofInterests.objects.all(), required=False)
     interest_1_bio = forms.CharField(max_length=140,required=False)
     interest_1_link = forms.CharField(max_length=100,required=False)
