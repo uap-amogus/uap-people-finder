@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -11,7 +12,7 @@ class ListofInterests(models.Model):
 
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, primary_key=True)
-    display_picture = models.ImageField(upload_to='images/')
+    display_picture = models.ImageField(upload_to='images/', default='images/default.png')
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     
