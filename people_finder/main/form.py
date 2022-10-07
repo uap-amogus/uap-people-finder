@@ -43,4 +43,5 @@ class ProfileForm(forms.Form):
     # interest1 = forms.
 
 
-    
+class SearchForm(forms.Form):
+    searchText = forms.CharField(max_length=30, required=False)

@@ -214,5 +214,40 @@ def password_reset_profile_request(request):
 
 
 @login_required(login_url='main:login')
-def search():
-    pass
+def search_request(request):
+    if request.method == "POST":
+        search_form = SearchForm(request.POST)
+        searchValue = User.objects.filter(name__unaccent__icontains=searchValue)
+    #     if search_form.is_valid():
+    #         data = password_reset_form.cleaned_data['email']
+    #         associated_users = User.objects.filter(Q(email=data))
+    #         if associated_users.exists():
+    #             for user in associated_users:
+    #                 subject = "Password Reset Requested"
+    #                 email_template_name = "main/password/password_reset_email.txt"
+    #                 c = {
+    #                     "email": user.email,
+    #                     'domain': '127.0.0.1:8000',
+    #                     'site_name': 'UAP People finder',
+    #                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+    #                     "user": user,
+    #                     'token': default_token_generator.make_token(user),
+    #                     'protocol': 'http',
+    #                 }
+    #                 email = render_to_string(email_template_name, c)
+    #                 email_from = settings.EMAIL_HOST_USER
+    #                 recipient_list = [str(user.email).lower(), ]
+    #                 try:
+    #                     send_mail(subject, email, email_from, recipient_list)
+    #                 except BadHeaderError:
+    #                     messages.error(
+    #                         request, "There was an issue sending the mail.")
+    #                     return redirect("password_reset")
+    #                 messages.success(request, "Success!")
+    #                 return redirect("password_reset_done")
+    # search_form = SearchForm(
+    #     initial={'email': str(request.user).lower()})
+    # search_form.fields['email'].widget.attrs['readonly'] = True
+    else:
+        search_form = SearchForm()
+    return render(request=request, template_name="main/search.html", context={"search_form": search_form})
