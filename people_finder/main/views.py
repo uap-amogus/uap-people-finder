@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .form import NewUserForm, ProfileForm, SearchForm
+from .form import NewUserForm, ProfileForm, SearchForm, SearchTable
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.utils.crypto import get_random_string
@@ -215,13 +215,20 @@ def password_reset_profile_request(request):
 
 @login_required(login_url='main:login')
 def search_request(request):
+    search_form = SearchForm()
     if request.method == "POST":
         searchV = request.POST["search_text"]
-        print(searchV)
         searchValue = User.objects.filter(email__icontains=searchV)
-        # print(searchValue.values())
+        
+        tempObj = set()
         for user in searchValue:
-            print(Profile.objects.get(username=user).first_name)
-
-    search_form = SearchForm()
+            obj = Profile.objects.get(username=user)
+            tempObj.add(obj)
+        print(type(tempObj))
+        print(tempObj)
+        table = SearchTable(tempObj)
+        print(type(table))
+        print(table)
+        return render(request=request, template_name="main/search.html", context={"search_form": search_form, "table":table})
+    
     return render(request=request, template_name="main/search.html", context={"search_form": search_form})

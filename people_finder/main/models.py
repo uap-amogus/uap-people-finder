@@ -12,9 +12,9 @@ class ListofInterests(models.Model):
 
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, primary_key=True)
-    display_picture = models.ImageField(upload_to='images/', default='images/default.png')
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
+    display_picture = models.ImageField(upload_to='images/', default='images/default.png')
 
 
 class Interest(models.Model):

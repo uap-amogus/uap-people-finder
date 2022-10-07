@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, ListofInterests, Interest
+import django_tables2 as tables
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -45,3 +46,9 @@ class ProfileForm(forms.Form):
 
 class SearchForm(forms.Form):
     search_text = forms.CharField(max_length=30, required=False)
+
+
+class SearchTable(tables.Table):
+    class Meta:
+        model = Profile
+        template_name = "django_tables2/semantic.html"

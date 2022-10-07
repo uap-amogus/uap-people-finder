@@ -8,6 +8,7 @@ django-crispy-forms = "*"
 python-dotenv = "*"
 pillow = "*"
 django = "*"
+django-tables2 = "*"
 
 [dev-packages]
 autopep8 = "*"
