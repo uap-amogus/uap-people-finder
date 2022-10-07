@@ -15,7 +15,7 @@ class Profile(models.Model):
     display_picture = models.ImageField(upload_to='images/', default='images/default.png')
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
-    
+
 
 class Interest(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)

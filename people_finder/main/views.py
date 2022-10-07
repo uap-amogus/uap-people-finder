@@ -219,7 +219,9 @@ def search_request(request):
         searchV = request.POST["search_text"]
         print(searchV)
         searchValue = User.objects.filter(email__icontains=searchV)
-        print(searchValue)
+        # print(searchValue.values())
+        for user in searchValue:
+            print(Profile.objects.get(username=user).first_name)
 
     search_form = SearchForm()
     return render(request=request, template_name="main/search.html", context={"search_form": search_form})
