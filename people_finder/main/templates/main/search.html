@@ -28,8 +28,10 @@
             {% csrf_token %}
             {{ search_form|crispy }}                    
             <button class="btn btn-primary" type="submit">Search</button>
-
         </form>
+        <br>
+        <br>
+        <br>
         {% if table %}
         {% load django_tables2 %} 
         {% render_table table %}

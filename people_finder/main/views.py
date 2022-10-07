@@ -224,11 +224,9 @@ def search_request(request):
         for user in searchValue:
             obj = Profile.objects.get(username=user)
             tempObj.add(obj)
-        print(type(tempObj))
-        print(tempObj)
+
         table = SearchTable(tempObj)
-        print(type(table))
-        print(table)
+
         return render(request=request, template_name="main/search.html", context={"search_form": search_form, "table":table})
     
     return render(request=request, template_name="main/search.html", context={"search_form": search_form})

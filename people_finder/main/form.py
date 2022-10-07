@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, ListofInterests, Interest
 import django_tables2 as tables
+from django.utils.safestring import mark_safe
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -48,7 +49,13 @@ class SearchForm(forms.Form):
     search_text = forms.CharField(max_length=30, required=False)
 
 
+
+class ImageColumn(tables.Column):
+    def render(self, value):
+        return mark_safe('<img src="%s" alt="Display Picture" style="float:right;width:100px;height:100px;padding:20px 20px 20px 20px; z-index: 7;" />' % value)
 class SearchTable(tables.Table):
     class Meta:
         model = Profile
-        template_name = "django_tables2/semantic.html"
+        template_name = "django_tables2/bootstrap-responsive.html"
+    
+    display_picture = ImageColumn()
