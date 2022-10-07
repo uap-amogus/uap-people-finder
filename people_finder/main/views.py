@@ -210,3 +210,9 @@ def password_reset_profile_request(request):
         initial={'email': str(request.user).lower()})
     password_reset_form.fields['email'].widget.attrs['readonly'] = True
     return render(request=request, template_name="main/password/password_reset_profile.html", context={"password_reset_form": password_reset_form})
+
+
+
+@login_required(login_url='main:login')
+def search():
+    pass
