@@ -219,9 +219,11 @@ def search_request(request):
     if request.method == "POST":
         searchV = request.POST["search_text"]
         searchValue = User.objects.filter(email__icontains=searchV)
-
+        
         if not(searchValue):
             searchValue = Profile.objects.filter(first_name__icontains=searchV)
+        if not(searchValue):
+            searchValue = Profile.objects.filter(last_name__icontains=searchV)
         
         tempObj = set()
         for user in searchValue:
