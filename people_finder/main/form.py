@@ -44,4 +44,4 @@ class ProfileForm(forms.Form):
 
 
 class SearchForm(forms.Form):
-    searchText = forms.CharField(max_length=30, required=False)
+    search_text = forms.CharField(max_length=30, required=False)
