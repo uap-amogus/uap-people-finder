@@ -1,6 +1,5 @@
 from dataclasses import fields
 from pyexpat import model
-from socket import fromshare
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
