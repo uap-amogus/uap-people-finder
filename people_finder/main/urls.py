@@ -3,6 +3,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 app_name = "main"
 
 urlpatterns = [
@@ -17,7 +18,8 @@ urlpatterns = [
         views.password_reset_profile_request,
         name="password_reset_profile",
     ),
-    path("search", views.search_request, name="search"),
+    path("search", views.search_request, name="search"),     
+
 ]
 if settings.DEBUG:  # new
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
