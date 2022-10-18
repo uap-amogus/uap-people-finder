@@ -259,25 +259,29 @@ def search_request(request):
     search_form = SearchForm()
     if request.method == "POST":
         searchV = request.POST["search_text"]
-        searchValue = User.objects.filter(email__icontains=searchV)
+        searchV = searchV.strip()
+        if searchV:
+            searchValue = User.objects.filter(email__icontains=searchV)
+            if not (searchValue):
+                searchValue = Profile.objects.filter(first_name__icontains=searchV)
+            if not (searchValue):
+                searchValue = Profile.objects.filter(last_name__icontains=searchV)
 
-        if not (searchValue):
-            searchValue = Profile.objects.filter(first_name__icontains=searchV)
-        if not (searchValue):
-            searchValue = Profile.objects.filter(last_name__icontains=searchV)
+            tempObj = set()
+            for user in searchValue:
+                try:
+                    obj = Profile.objects.get(username=user)
+                    tempObj.add(obj)
+                except Exception as msg:
+                    print(msg)
 
-        tempObj = set()
-        for user in searchValue:
-            obj = Profile.objects.get(username=user)
-            tempObj.add(obj)
+            table = SearchTable(tempObj)
 
-        table = SearchTable(tempObj)
-
-        return render(
-            request=request,
-            template_name="main/search.html",
-            context={"search_form": search_form, "table": table},
-        )
+            return render(
+                request=request,
+                template_name="main/search.html",
+                context={"search_form": search_form, "table": table},
+            )
 
     return render(
         request=request,
