@@ -62,11 +62,12 @@ save_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button'
 save_button.click()
 time.sleep(2)
 
+#serach
 search = driver.find_element(By.XPATH, '/html/body/div/nav/div/ul/li[3]/a')
 search.click()
 time.sleep(2)
 
-
+#search user
 search_text = driver.find_element(By.XPATH, '//*[@id="id_search_text"]')
 search_text.send_keys('19201048@uap-bd.edu')
 
@@ -74,4 +75,9 @@ search_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/butto
 search_button.click()
 time.sleep(2)
 
+
+#logout(You have successfully logged out)
+logout = driver.find_element(By.XPATH, '/html/body/div/nav/div/ul/li[1]/a')
+logout.click()
+time.sleep(2)
 
