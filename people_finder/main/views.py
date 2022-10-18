@@ -40,6 +40,7 @@ def check_valid(request, dic):
 
 
 def confirm_email(email, password):
+    body = f"Hello There!\nYour Cerdentials at UAP PEOPLE FINDER\nemail = {email}\npassword = {password}"
     subject = "Your Cerdentials at UAP PEOPLE"
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [
