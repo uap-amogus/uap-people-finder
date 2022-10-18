@@ -101,6 +101,7 @@ signup = driver.find_element(By.XPATH, '//*[@id="id_email"]')
 signup.clear()
 signup.send_keys('19201048@uap-bd.edu')
 
+#redio_button
 acc_radio = driver.find_element(By.XPATH,'//*[@id="id_accept_terms"]')
 acc_radio.click()
 time.sleep(2)
