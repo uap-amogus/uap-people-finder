@@ -123,7 +123,7 @@ except AssertionError as msg:
 try:
     interst3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
     assert interst3.get_attribute('value') == "Dance", "Test: Interest selection does not match (Dance) ❌"
-    print("Test: Selection of Interest 2 matches (Dance) ✅")
+    print("Test: Selection of Interest 3 matches (Dance) ✅")
 except AssertionError as msg:
     print(msg)
 try:
