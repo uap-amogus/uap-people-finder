@@ -79,6 +79,24 @@ try:
 except AssertionError as msg:
     print(msg)
 
+try:
+    search_inp = driver.find_element(By.XPATH, '//*[@id="id_search_text"]')
+    search_inp.clear()
+    search_inp.send_keys('Busra')
+    search_btn = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button')
+    search_btn.click()
+except Exception as msg:
+    print("Search page couldn't be loaded ❌")
+    print(msg)
+try:
+    # assert 'Azim' in driver.page_source, "Search could not find the user (19201026@uap-bd.edu) ❌"
+    output_box = driver.find_elements(By.XPATH, './/td')
+    datas = [item.text for item in output_box]
+    assert "19201048@uap-bd.edu" in datas, 'Test: Search could not find the user Busra (19201048@uap-bd.edu) ❌'
+    print("Test: Search found the user Busra (19201048@uap-bd.edu) ✅")
+except AssertionError as msg:
+    print(msg)
+
 time.sleep(1)
 driver.close()
 exit(0)
