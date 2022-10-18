@@ -3,6 +3,7 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotSelectableException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
 
 driver = webdriver.Chrome() 
@@ -111,5 +112,18 @@ signup_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/butto
 signup_button.click()
 time.sleep(2)
 
+#check data
+try:
+    firstname_field = driver.find_element(By.XPATH, '//*[@id="id_first_name"]')
+    assert firstname_field.get_attribute('value') == firstname_field, "Test: First name does not match ?"
+    print("Test: First name matches ?")
+except AssertionError as msg:
+    print(msg)
+try:
+    lastname_field = driver.find_element(By.XPATH, '//*[@id="id_last_name"]')
+    assert lastname_field.get_attribute('value') == lastname_field, "Test: Last name does not match ?"
+    print("Test: Last name matches ?")
+except AssertionError as msg:
+    print(msg)
 
 
