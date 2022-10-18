@@ -96,3 +96,18 @@ signup = driver.find_element(By.XPATH, '/html/body/div/nav/div/ul/li[2]/a')
 signup.click()
 time.sleep(2)
 
+#signup
+signup = driver.find_element(By.XPATH, '//*[@id="id_email"]')
+signup.clear()
+signup.send_keys('19201048@uap-bd.edu')
+
+acc_radio = driver.find_element(By.XPATH,'//*[@id="id_accept_terms"]')
+acc_radio.click()
+time.sleep(2)
+
+signup_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button')
+signup_button.click()
+time.sleep(2)
+
+
+
