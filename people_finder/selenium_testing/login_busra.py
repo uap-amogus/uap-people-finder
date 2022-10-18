@@ -101,9 +101,9 @@ signup = driver.find_element(By.XPATH, '//*[@id="id_email"]')
 signup.clear()
 signup.send_keys('19201048@uap-bd.edu')
 
-#box
-acc_box = driver.find_element(By.XPATH,'//*[@id="id_accept_terms"]')
-acc_box.click()
+#check box
+acc_checkbox = driver.find_element(By.XPATH,'//*[@id="id_accept_terms"]')
+acc_checkbox.click()
 time.sleep(2)
 
 signup_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button')
