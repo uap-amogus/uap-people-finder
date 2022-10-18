@@ -133,4 +133,4 @@ try:
 except AssertionError as msg:
     print(msg)
 
-#driver.close()
+driver.close()
