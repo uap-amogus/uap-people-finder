@@ -38,22 +38,52 @@ try:
 except Exception as msg:
     print("Test: Interest Selection Failed (Photography) ❌")
  
-
 try:
     interest2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
     interest2 = Select(interst1)
-    interest2.select_by_value('Googling')
-    print("Test: Selection of Interest 1 Successful (Googling) ✅")
+    interest2.select_by_value('googling')
+    print("Test: Selection of Interest 1 Successful (googling) ✅")
 except Exception as msg:
-    print("Test: Interest Selection Failed (Googling) ❌")
+    print("Test: Interest Selection Failed (googling) ❌")
+
+
+
+#interest 2
+try:
+    interst2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
+    interst2 = Select(interst2)
+    interst2.select_by_value('Programming')
+    print("Test: Selection of Interest 2 Successful (Programming) ✅")
+except Exception as msg:
+    print("Test: Interest Selection Failed (Programming) ❌")
+ 
+try:
+    interest3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
+    interest3 = Select(interst2)
+    interest3.select_by_value('facebooking')
+    print("Test: Selection of Interest 2 Successful (facebooking) ✅")
+except Exception as msg:
+    print("Test: Interest Selection Failed (facebooking) ❌")
+
+
 
 try:
     interst3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
     interst3 = Select(interst3)
     interst3.select_by_value('Dance')
-    print("Test: Selection of Interest 1 Successful (Dance) ✅")
+    print("Test: Selection of Interest 3 Successful (Dance) ✅")
 except Exception as msg:
     print("Test: Interest Selection Failed (Dance) ❌")
+ 
+try:
+    interest2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
+    interest2 = Select(interst3)
+    interest2.select_by_value('singing')
+    print("Test: Selection of Interest 3 Successful (singing) ✅")
+except Exception as msg:
+    print("Test: Interest Selection Failed (singing) ❌")
+
+
 
 save_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button')
 save_button.click()
@@ -74,11 +104,33 @@ try:
 except AssertionError as msg:
     print(msg)
 
+#interest2
 try:
-    interst3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
-    assert interst3.get_attribute('value') == "Dance", "Test: Interest selection does not match (Dance) ❌"
-    print("Test: Selection of Interest 1 matches (Dance) ✅")
+    interst2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
+    assert interst2.get_attribute('value') == "Programming", "Test: Interest selection does not match (Programming) ❌"
+    print("Test: Selection of Interest 2 matches (Programming) ✅")
+except AssertionError as msg:
+    print(msg)
+try:
+    interst2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
+    assert interst2.get_attribute('value') == "Photography", "Test: Interest selection does not match (Photography) ❌"
+    print("Test: Selection of Interest 2 matches (Photography) ✅")
 except AssertionError as msg:
     print(msg)
 
-driver.close()
+#interest3
+
+try:
+    interst3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
+    assert interst3.get_attribute('value') == "Dance", "Test: Interest selection does not match (Dance) ❌"
+    print("Test: Selection of Interest 2 matches (Dance) ✅")
+except AssertionError as msg:
+    print(msg)
+try:
+    interst3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
+    assert interst3.get_attribute('value') == "Movies", "Test: Interest selection does not match (Movies) ❌"
+    print("Test: Selection of Interest 3 matches (Movies) ✅")
+except AssertionError as msg:
+    print(msg)
+
+#driver.close()
