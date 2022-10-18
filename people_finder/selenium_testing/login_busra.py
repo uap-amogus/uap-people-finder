@@ -3,11 +3,12 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotSelectableException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
 
 driver = webdriver.Chrome() 
 driver.get("http://103.198.137.87:8000/home/login")
-time.sleep(2)
+time.sleep(3)
 
 username_field = driver.find_element(By.XPATH, '//*[@id="id_username"]')
 password_field = driver.find_element(By.XPATH, '//*[@id="id_password"]')
@@ -20,7 +21,7 @@ password_field.send_keys('SJEx8ttw')
 #You are now logged in.
 login_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/button')
 login_button.click()
-time.sleep(2)
+time.sleep(3)
 
 
 if 'Welcome, 19201048@uap-bd.edu' in driver.page_source:
@@ -36,6 +37,7 @@ firstname_field.send_keys('Busra Jahan')
 lastname_field = driver.find_element(By.XPATH, '//*[@id="id_last_name"]')
 lastname_field.clear()
 lastname_field.send_keys('Tanu')
+
 
 #bio1
 interest1_bio_field = driver.find_element(By.XPATH, '//*[@id="id_interest_1_bio"]')
@@ -110,5 +112,18 @@ signup_button = driver.find_element(By.XPATH, '/html/body/div/div/div/form/butto
 signup_button.click()
 time.sleep(2)
 
+#check data
+try:
+    firstname_field = driver.find_element(By.XPATH, '//*[@id="id_first_name"]')
+    assert firstname_field.get_attribute('value') == firstname_field, "Test: First name does not match ?"
+    print("Test: First name matches ?")
+except AssertionError as msg:
+    print(msg)
+try:
+    lastname_field = driver.find_element(By.XPATH, '//*[@id="id_last_name"]')
+    assert lastname_field.get_attribute('value') == lastname_field, "Test: Last name does not match ?"
+    print("Test: Last name matches ?")
+except AssertionError as msg:
+    print(msg)
 
 
