@@ -13,7 +13,7 @@ username_field = driver.find_element(By.XPATH, '//*[@id="id_username"]')
 password_field = driver.find_element(By.XPATH, '//*[@id="id_password"]')
 
 username_field.send_keys('19201026@uap-bd.edu')
-password_field.send_keys('@abcd1234')
+password_field.send_keys('@abc234')
 login_button = driver.find_element(
     By.XPATH, '/html/body/div/div/div/form/button')
 login_button.click()

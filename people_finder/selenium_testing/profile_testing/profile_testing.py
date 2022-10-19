@@ -127,5 +127,5 @@ except AssertionError as msg:
     print(msg)
 
 
-driver.close()
-exit(1)
+# driver.close()
+# exit(1)

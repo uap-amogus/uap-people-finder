@@ -144,4 +144,4 @@ except AssertionError as errMsg:
     print(errMsg)
 sleep(2)
 
-driver.close()
+# driver.close()
