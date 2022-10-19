@@ -30,6 +30,7 @@ else:
     print("Not logged in")
 
 
+print("🤞 Inputting the datas 🤞")
 try:
     interst1 = driver.find_element(By.XPATH, '//*[@id="id_interest_1"]')
     interst1 = Select(interst1)
@@ -91,6 +92,7 @@ time.sleep(1.5)
 
 
 #check data
+print("🤞 Checking the data which was inputed 🤞")
 try:
     interst1 = driver.find_element(By.XPATH, '//*[@id="id_interest_1"]')
     assert interst1.get_attribute('value') == "Photography", "Test: Interest selection does not match (Photography) ❌"
@@ -134,3 +136,4 @@ except AssertionError as msg:
     print(msg)
 
 driver.close()
+exit(1)

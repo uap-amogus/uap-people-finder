@@ -26,7 +26,7 @@ except AssertionError as msg:
 
 # SEND & SAVE DATA
 #########################################################################################################################
-
+print("🤞 Inputting the datas 🤞")
 fname = "Islam"
 lname = "Azim"
 try:
@@ -73,6 +73,7 @@ time.sleep(1.5)
 
 # CHECK DATA
 #########################################################################################################################
+print("🤞 Checking the data which was inputed 🤞")
 try:
     first_name = driver.find_element(By.XPATH, '//*[@id="id_first_name"]')
     assert first_name.get_attribute(
