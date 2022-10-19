@@ -51,7 +51,7 @@ except Exception as msg:
 # this will fail
 try:
     interest2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
-    interest2 = Select(interst1)
+    interest2 = Select(interest2)
     interest2.select_by_value('Googling')
     print("Test: Selection of Interest 1 Successful (Googling) ✅")
 except Exception as msg:

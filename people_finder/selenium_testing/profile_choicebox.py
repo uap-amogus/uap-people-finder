@@ -40,7 +40,7 @@ except Exception as msg:
  
 try:
     interest2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
-    interest2 = Select(interst1)
+    interest2 = Select(interest2)
     interest2.select_by_value('googling')
     print("Test: Selection of Interest 1 Successful (googling) ✅")
 except Exception as msg:
@@ -59,7 +59,7 @@ except Exception as msg:
  
 try:
     interest3 = driver.find_element(By.XPATH, '//*[@id="id_interest_3"]')
-    interest3 = Select(interst2)
+    interest3 = Select(interest3)
     interest3.select_by_value('facebooking')
     print("Test: Selection of Interest 2 Successful (facebooking) ✅")
 except Exception as msg:
@@ -77,7 +77,7 @@ except Exception as msg:
  
 try:
     interest2 = driver.find_element(By.XPATH, '//*[@id="id_interest_2"]')
-    interest2 = Select(interst3)
+    interest2 = Select(interest2)
     interest2.select_by_value('singing')
     print("Test: Selection of Interest 3 Successful (singing) ✅")
 except Exception as msg:
